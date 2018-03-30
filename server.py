@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
         while True:
             conn, addr = s.accept()     # Establish connection with client.
-            print 'Got connection from', addr
+            print('Got connection from', addr)
             data = conn.recv(4096)
 
             filename = "images/" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ".jpg"
