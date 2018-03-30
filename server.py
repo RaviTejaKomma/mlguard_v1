@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
             sendImage(filename)         # send images to telegram
 
-            conn.send("Done")           #send the acknowledgement to the client
+            conn.send(b'Done')           #send the acknowledgement to the client
             print("Sent back")
     except KeyboardInterrupt as e:
         s.close()
