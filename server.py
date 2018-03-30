@@ -32,7 +32,7 @@ if __name__ == "__main__":
             conn, addr = s.accept()     # Establish connection with client.
             print('Got connection from', addr)
             data = conn.recv(4096)
-
+            print(len(data))
             filename = "../images/" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ".jpg"
             f = open(filename,'wb')     # open the file
             f.write(data)               # write the received data into the file
