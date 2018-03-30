@@ -1,7 +1,20 @@
 # server.py
 import time,datetime  
 import socket                       # Import socket module
-from time import gmtime, strftime   
+from time import gmtime, strftime 
+import telepot
+from telepot.loop import MessageLoop
+import requests
+
+bot = telepot.Bot('585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk')
+def sendImage(filename):
+    url = "https://api.telegram.org/bot585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk/sendPhoto";
+    files = {'photo': open(filename, 'rb')}
+    data = {'chat_id' : "460626793"}
+    text_data = "Person Detected"
+    bot.sendMessage(data['chat_id'], text=text_data)
+    r = requests.post(url, files=files, data=data)
+    #print(r.status_code, r.reason, r.content)  
 
 
 if __name__ == "__main__": 
@@ -25,6 +38,8 @@ if __name__ == "__main__":
             f.write(data)               # write the received data into the file
             print("File saved")
             f.close()                   #close the file
+
+            sendImage(filename)         # send images to telegram
 
             conn.send("Done")           #send the acknowledgement to the client
             print("Sent back")
