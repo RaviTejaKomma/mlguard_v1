@@ -20,7 +20,7 @@ if __name__ == "__main__":
             print('Got connection from', addr)
             data = conn.recv(4096)
 
-            filename = "images/" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ".jpg"
+            filename = "../images/" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ".jpg"
             f = open(filename,'wb')     # open the file
             f.write(data)               # write the received data into the file
             print("File saved")
