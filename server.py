@@ -97,6 +97,7 @@ def sendImage(filename):
     text_data = "Person Detected"
     bot.sendMessage(data['chat_id'], text=text_data)
     r= requests.post(url, files=files, data=data)
+    print(r)
 
 if __name__ == "__main__": 
 
