@@ -88,14 +88,15 @@ import requests
 #     server = make_server('localhost', 7789, wsgi_app)
 #     server.serve_forever()
 
-bot = telepot.Bot('514668041:AAGf5C4tA9qMSjUoXfPUbJdo1mRgNzj_-7Q')
+bot = telepot.Bot("514668041:AAGf5C4tA9qMSjUoXfPUbJdo1mRgNzj_-7Q")
+url = "https://api.telegram.org/bot514668041:AAGf5C4tA9qMSjUoXfPUbJdo1mRgNzj_-7Q/sendPhoto";
 
-def send_message(filename):
-    url = "https://api.telegram.org/bot514668041:AAGf5C4tA9qMSjUoXfPUbJdo1mRgNzj_-7Q/sendPhoto";
+def sendImage(filename):
     files = {'photo': open(filename, 'rb')}
+    data = {'chat_id' : "461262677"}
     text_data = "Person Detected"
-    data = {'chat_id' : "461262677","caption":str(id) + ":" + text_data}    
-    r = requests.post(url, files=files, data=data)
+    bot.sendMessage(data['chat_id'], text=text_data)
+    r= requests.post(url, files=files, data=data)
 
 if __name__ == "__main__": 
 
