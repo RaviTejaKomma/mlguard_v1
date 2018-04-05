@@ -110,7 +110,7 @@ if __name__ == "__main__":
         s.listen(10)                    # Now wait for client connection.
         print(socket.gethostname())
         print('Server listening....')
-
+        counter = 0
         while True:
             conn, addr = s.accept()     # Establish connection with client.
             print('Got connection from', addr)
@@ -128,7 +128,8 @@ if __name__ == "__main__":
 
             print('Received image size: {}'.format(len(raw_img)))
 
-            filename = strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ".jpg"
+            filename = "person_"+ str(counter) +".jpg"
+            counter+=1
             f = open(filename,'wb')     # open the file
             f.write(raw_img)               # write the received data into the file
             print("File saved")
