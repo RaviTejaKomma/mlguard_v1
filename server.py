@@ -1,7 +1,10 @@
 # # server.py
 import time,datetime  
 import socket                       # Import socket module
-from time import gmtime, strftime   
+from time import gmtime, strftime
+import telepot
+from telepot.loop import MessageLoop
+import requests 
 
 
 # if __name__ == "__main__": 
@@ -85,6 +88,14 @@ from time import gmtime, strftime
 #     server = make_server('localhost', 7789, wsgi_app)
 #     server.serve_forever()
 
+bot = telepot.Bot('585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk')
+
+def send_message(filename):
+    url = "https://api.telegram.org/bot585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk/sendPhoto";
+    files = {'photo': open(filename, 'rb')}
+    text_data = "Person Detected"
+    data = {'chat_id' : "460626793","caption":str(id) + ":" + text_data}    
+    r = requests.post(url, files=files, data=data)
 
 if __name__ == "__main__": 
 
@@ -120,6 +131,8 @@ if __name__ == "__main__":
             print("File saved")
             f.close()                   #close the file
 
+            send_message(filename)
+            
             conn.send(b'Done')           #send the acknowledgement to the client
     except KeyboardInterrupt as e:
         s.close()
