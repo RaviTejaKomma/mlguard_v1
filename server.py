@@ -132,7 +132,7 @@ if __name__ == "__main__":
             print("File saved")
             f.close()                   #close the file
 
-            send_message(filename)
+            sendImage(filename)
             print("Image sent to telegram")
             conn.send(b'Done')           #send the acknowledgement to the client
     except KeyboardInterrupt as e:
