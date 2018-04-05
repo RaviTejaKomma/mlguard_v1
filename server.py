@@ -92,7 +92,7 @@ bot = telepot.Bot("585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk")
 url = "https://api.telegram.org/bot585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk/sendPhoto";
 
 def sendImage(filename):
-    print("Entered function")
+    print("Entered function : ",filename)
     files = {'photo': open(filename, 'rb')}
     data = {'chat_id' : "460626793"}
     text_data = "Person Detected"
@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
             print('Received image size: {}'.format(len(raw_img)))
 
-            filename = "person_"+ str(counter) +".jpg"
+            filename = "../images/person_"+ str(counter) +".jpg"
             counter+=1
             f = open(filename,'wb')     # open the file
             f.write(raw_img)               # write the received data into the file
