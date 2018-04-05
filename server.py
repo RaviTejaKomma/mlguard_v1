@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
             print('Received image size: {}'.format(len(raw_img)))
 
-            filename = "images/" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ".jpg"
+            filename = "../images/" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ".jpg"
             f = open(filename,'wb')     # open the file
             f.write(raw_img)               # write the received data into the file
             print("File saved")
