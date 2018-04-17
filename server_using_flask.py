@@ -19,7 +19,7 @@ def test():
     img = base64.b64decode(nparr)
     file_like = BytesIO(img)
     img = Image.open(file_like)
-    img.save("retrieved_image.jpg")
+    img.save("../images/retrieved_image.jpg")
 
     # do some fancy processing here....
 
