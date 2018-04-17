@@ -8,6 +8,7 @@ import telepot
 from telepot.loop import MessageLoop
 import requests
 import datetime
+import MySQLdb
 
 bot = telepot.Bot("585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk")
 url = "https://api.telegram.org/bot585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk/sendPhoto";
