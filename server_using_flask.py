@@ -4,6 +4,20 @@ import numpy as np
 import base64
 from PIL import Image
 from io import BytesIO
+import telepot
+from telepot.loop import MessageLoop
+import requests
+
+bot = telepot.Bot("585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk")
+url = "https://api.telegram.org/bot585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk/sendPhoto";
+
+def sendImage(filename):
+    files = {'photo': open(filename, 'rb')}
+    data = {'chat_id' : "460626793"}
+    text_data = "Person Detected"
+    bot.sendMessage(data['chat_id'], text=text_data)
+    r= requests.post(url, files=files, data=data)
+    print("Image sent to telegram")
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -19,8 +33,9 @@ def test():
     img = base64.b64decode(nparr)
     file_like = BytesIO(img)
     img = Image.open(file_like)
-    img.save("../images/retrieved_image.jpg")
-
+    filename = "../images/retrieved_image.jpg"
+    img.save(filename)
+    sendImage(filename)
     # do some fancy processing here....
 
     # build a response dict to send back to client
