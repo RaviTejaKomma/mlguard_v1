@@ -1,5 +1,6 @@
 from flask import Flask, request, Response
 import numpy as np
+import json
 import base64
 from PIL import Image
 from io import BytesIO
@@ -10,28 +11,40 @@ import datetime
 import MySQLdb
 import pickle
 
-bot = telepot.Bot("585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk")
-url = "https://api.telegram.org/bot585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk/sendPhoto";
-
-def sendImage(filename):
-    files = {'photo': open(filename, 'rb')}
-    data = {'chat_id' : "460626793"}
-    text_data = "Person Detected"
-    bot.sendMessage(data['chat_id'], text=text_data)
-    r= requests.post(url, files=files, data=data)
-    print("Image sent to telegram")
-
-def log_in_db(filename):
-    company_id = 3
-    blob_value = open(filename,'rb').read()
-    in_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+def get_connection():
     conn = MySQLdb.connect(host="107.180.71.58",
               port=3306,
               user="root",
               passwd="root",
               db="mlcharts")
-    cur=conn.cursor()
-    cur.execute("""INSERT INTO faces_log(face_image,in_time,cid,name) VALUES (%s,%s,%s,%s)""",(blob_value,in_time,company_id,'UNKNOWN'))
+    return conn
+
+def retrieve_telegram_details(cid):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT chat_id,chat_api from chat_table WHERE cid="+str(cid))
+    data = cur.fetchall()
+    chat_id = data[0][0]
+    chat_api = data[0][1]
+    return [chat_id,chat_api]
+
+def sendImage(filename,cid):
+    chat_id, chat_api = retrieve_telegram_details(cid)
+    bot = telepot.Bot(chat_api)
+    url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
+    files = {'photo': open(filename, 'rb')}
+    data = {'chat_id' : chat_id}
+    text_data = "Person Detected"
+    bot.sendMessage(data['chat_id'], text=text_data)
+    r= requests.post(url, files=files, data=data)
+    print("Image sent to telegram")
+
+def log_in_db(filename,cid):
+    blob_value = open(filename,'rb').read()
+    in_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""INSERT INTO faces_log(face_image,in_time,cid,name) VALUES (%s,%s,%s,%s)""",(blob_value,in_time,cid,'UNKNOWN'))
     conn.commit()
     print("Logged Successfully")
 
@@ -45,8 +58,6 @@ def test():
     cid = int(data['cid'])
 
     # # decode image
-    print(data['cid'])
-
     img = base64.b64decode(data['img'])
     file_like = BytesIO(img)
     img = Image.open(file_like)
@@ -57,12 +68,13 @@ def test():
 
     # build a response dict to send back to client
     response = {'message': 'image received'}
-    # encode response using jsonpickle
+
+    # encode response using json
     response_pickled = json.dumps(response)
     print("Image Recieved")
 
-    sendImage(filename)
-    #log_in_db(filename)
+    log_in_db(filename,cid)
+    sendImage(filename,cid)
 
     return Response(response=response_pickled, status=200, mimetype="application/json")
 
