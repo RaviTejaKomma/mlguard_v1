@@ -1,5 +1,4 @@
 from flask import Flask, request, Response
-import json
 import numpy as np
 import base64
 from PIL import Image
@@ -9,6 +8,7 @@ from telepot.loop import MessageLoop
 import requests
 import datetime
 import MySQLdb
+import pickle
 
 bot = telepot.Bot("585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk")
 url = "https://api.telegram.org/bot585184839:AAGaTVTymWCTEwk3xTOYL-QDAwo8jNonUkk/sendPhoto";
@@ -41,18 +41,17 @@ app = Flask(__name__)
 # route http posts to this method
 @app.route('/api/test', methods=['POST'])
 def test():
-    r = request
-    # convert string of image data to uint8
-    data = json.loads(r.data)
+    data = pickle.loads(request.data)
     cid = int(data['cid'])
-    nparr = np.fromstring(data['img'], np.uint8)
-    # # decode image
 
-    img = base64.b64decode(nparr)
+    # # decode image
+    print(data['cid'])
+
+    img = base64.b64decode(data['img'])
     file_like = BytesIO(img)
     img = Image.open(file_like)
     present_time = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-    filename = "../images/"+ present_time +".jpg"
+    filename = "../images/"+present_time +".jpg"
     img.save(filename)
     # do some fancy processing here....
 
