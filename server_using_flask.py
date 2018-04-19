@@ -1,5 +1,5 @@
 from flask import Flask, request, Response
-import jsonpickle
+import json
 import numpy as np
 import base64
 from PIL import Image
@@ -43,7 +43,9 @@ app = Flask(__name__)
 def test():
     r = request
     # convert string of image data to uint8
-    nparr = np.fromstring(r.data, np.uint8)
+    data = json.loads(r.data)
+    cid = int(data['cid'])
+    nparr = np.fromstring(data['img'], np.uint8)
     # # decode image
 
     img = base64.b64decode(nparr)
@@ -57,11 +59,11 @@ def test():
     # build a response dict to send back to client
     response = {'message': 'image received'}
     # encode response using jsonpickle
-    response_pickled = jsonpickle.encode(response)
+    response_pickled = json.dumps(response)
     print("Image Recieved")
 
     sendImage(filename)
-    log_in_db(filename)
+    #log_in_db(filename)
 
     return Response(response=response_pickled, status=200, mimetype="application/json")
 
