@@ -40,11 +40,12 @@ def sendImage(filename,cid):
     print("Image sent to telegram")
 
 def log_in_db(filename,cid):
-    blob_value = open(filename,'rb').read()
+    blob = open(filename,'rb').read()
+    encoded_blob = base64.b64encode(blob)
     in_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("""INSERT INTO faces_log(face_image,in_time,cid,name) VALUES (%s,%s,%s,%s)""",(blob_value,in_time,cid,'UNKNOWN'))
+    cur.execute("""INSERT INTO faces_log(face_image,in_time,cid,name) VALUES (%s,%s,%s,%s)""",(encoded_blob,in_time,cid,'UNKNOWN'))
     conn.commit()
     print("Logged Successfully")
 
