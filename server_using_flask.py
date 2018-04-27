@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+ from flask import Flask, request, Response
 import numpy as np
 import json
 import base64
@@ -34,9 +34,9 @@ def sendImage(filename,cid):
     bot = telepot.Bot(chat_api)
     url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
     files = {'photo': open(filename, 'rb')}
-    data = {'chat_id' : chat_id}
     text_data = "Person Detected"
-    bot.sendMessage(data['chat_id'], text=text_data)
+    data = {'chat_id' : chat_id, "caption":text_data}
+    #bot.sendMessage(data['chat_id'], text=text_data)
     r= requests.post(url, files=files, data=data)
     print("Image sent to telegram")
 
