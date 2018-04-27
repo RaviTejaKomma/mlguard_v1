@@ -10,6 +10,7 @@ import requests
 import datetime
 import MySQLdb
 import pickle
+from threading import Thread
 
 def get_connection():
     conn = MySQLdb.connect(host="107.180.71.58",
@@ -73,10 +74,9 @@ def test():
     # encode response using json
     response_pickled = json.dumps(response)
     print("Image Recieved")
-
     log_in_db(filename,cid)
-    sendImage(filename,cid)
-
+    thread = Thread(target = sendImage, args = (filename,cid))
+    thread.start()
     return Response(response=response_pickled, status=200, mimetype="application/json")
 
 # start flask app
