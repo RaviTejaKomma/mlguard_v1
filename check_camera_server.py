@@ -3,12 +3,19 @@ import telepot
 from telepot.loop import MessageLoop
 import requests
 
+host_ip = "107.180.71.58"
+port = 3306
+user = "root"
+pwd = "root"
+db_name = "mlcharts"
+
 def get_telegram_details(cid):
-	conn = MySQLdb.connect(host="107.180.71.58", port=3306, user="root", passwd="root", db="mlcharts")
+	conn = MySQLdb.connect(host=host_ip, port=port, user=user, passwd=pwd, db=db_name)
 	cur = conn.cursor()
 	query = "SELECT chat_id, chat_api FROM chat_table where cid=" + str(cid)
 	cur.execute(query)
 	result = cur.fetchall() 
+	conn.close()
 	return result[0][0], result[0][1]
 	
 def send_to_telegram(cid):
@@ -19,13 +26,15 @@ def send_to_telegram(cid):
 	r = requests.post(url)
 	
 def check_camera_status():
-	conn = MySQLdb.connect(host="107.180.71.58", port=3306, user="root", passwd="root", db="mlcharts")
+	conn = MySQLdb.connect(host=host_ip, port=port, user=user, passwd=pwd, db=db_name)
 	cur = conn.cursor()
 	query = "SELECT cid, status FROM check_camera"
 	cur.execute(query)
 	result = cur.fetchall()	
+	conn.close()
 	for i in range(len(result)):
 		if(result[i][1] == "Camera is not working"):
 			send_to_telegram(result[i][0])
-	
-check_camera_status()
+
+if __name__ == "__main__":
+	check_camera_status()
