@@ -2,6 +2,11 @@ import MySQLdb
 import telepot
 from telepot.loop import MessageLoop
 import requests
+import logging
+
+logging.basicConfig(filename='error_log.log', level=logging.DEBUG, 
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logger=logging.getLogger(__name__)
 
 host_ip = "107.180.71.58"
 port = 3306
@@ -37,4 +42,7 @@ def check_camera_status():
 			send_to_telegram(result[i][0])
 
 if __name__ == "__main__":
-	check_camera_status()
+	try:
+		check_camera_status()
+	except Exception as e:
+		logger.error(e)

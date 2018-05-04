@@ -5,6 +5,11 @@ from datetime import datetime
 import telepot
 from telepot.loop import MessageLoop
 import requests
+import logging
+
+logging.basicConfig(filename='error_log.log', level=logging.DEBUG, 
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logger=logging.getLogger(__name__)
 
 def check_status():
 	uptimes_all = {}
@@ -46,4 +51,7 @@ def store_downtime(cid):
 	
 
 if __name__ == "__main__":
-	check_status()
+	try:
+		check_status()
+	except Exception as e:
+		logger.error(e)
