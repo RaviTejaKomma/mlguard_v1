@@ -35,12 +35,15 @@ def retrieve_telegram_details(cid):
 	chat_api = data[0][1]
 	return [chat_id,chat_api]
 
-def sendImage(filename,cid):
+def sendImage(filename, cid, flag):
 	chat_id, chat_api = retrieve_telegram_details(cid)
 	bot = telepot.Bot(chat_api)
 	url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
 	files = {'photo': open(filename, 'rb')}
-	text_data = "Person Detected"
+	if(flag==0):
+		text_data = "MLGuard Started"
+	else:
+		text_data = "Person Detected"
 	data = {'chat_id' : chat_id, "caption":text_data}
 	r= requests.post(url, files=files, data=data)
 	print("Image sent to telegram")
@@ -103,7 +106,7 @@ def test():
 			log_in_db(filename, cid)
 		else:
 			log_in_db_cam_status(filename, cid)
-		thread = Thread(target = sendImage, args = (filename,cid))
+		thread = Thread(target = sendImage, args = (filename, cid, int(data[flag])))
 		thread.start()
 
 		return Response(response=response_pickled, status=200, mimetype="application/json")
