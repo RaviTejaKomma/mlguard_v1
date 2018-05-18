@@ -13,7 +13,7 @@ import pickle
 from threading import Thread
 import logging
 
-logging.basicConfig(filename='error_log.log', level=logging.DEBUG, 
+logging.basicConfig(filename='error_log.log', level=logging.ERROR, 
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger=logging.getLogger(__name__)
 
@@ -40,10 +40,9 @@ def sendImage(filename, cid, flag):
 	bot = telepot.Bot(chat_api)
 	url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
 	files = {'photo': open(filename, 'rb')}
+	text_data = "Person Detected"
 	if(flag==0):
-		text_data = "MLGuard Started"
-	else:
-		text_data = "Person Detected"
+		text_data = "MLGuard Started"	
 	data = {'chat_id' : chat_id, "caption":text_data}
 	r= requests.post(url, files=files, data=data)
 	print("Image sent to telegram")
@@ -59,6 +58,7 @@ def log_in_db(filename, cid):
 		conn.commit()
 	except Exception as e:
 		conn.rollback()
+		logger.error(e)
 	conn.close()
 	print("Logged Successfully")
 	
@@ -73,6 +73,7 @@ def log_in_db_cam_status(filename, cid):
 		conn.commit()
 	except Exception as e:
 		conn.rollback()
+		logger.error(e)
 	conn.close()
 	print("Logged Successfully")
 
@@ -106,7 +107,7 @@ def test():
 			log_in_db(filename, cid)
 		else:
 			log_in_db_cam_status(filename, cid)
-		thread = Thread(target = sendImage, args = (filename, cid, int(data[flag])))
+		thread = Thread(target = sendImage, args = (filename, cid, int(data['flag'])))
 		thread.start()
 
 		return Response(response=response_pickled, status=200, mimetype="application/json")
