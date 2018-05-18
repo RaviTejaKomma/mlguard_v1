@@ -41,9 +41,9 @@ def sendImage(filename, cid, flag):
 	url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
 	files = {'photo': open(filename, 'rb')}
 	if(flag==0):
-		text_data = "MLGuard Started"
-	else:
 		text_data = "Person Detected"
+	else:
+		text_data = "MLGuard Started"
 	data = {'chat_id' : chat_id, "caption":text_data}
 	r= requests.post(url, files=files, data=data)
 	print("Image sent to telegram")
