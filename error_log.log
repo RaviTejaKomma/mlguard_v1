@@ -1,0 +1,34 @@
+2018-05-04 15:45:41,280 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:18:00,641 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:18:38,187 ERROR __main__ name 'os' is not defined
+2018-05-08 11:18:38,189 INFO werkzeug 125.62.214.210 - - [08/May/2018 11:18:38] "POST /api/test HTTP/1.1" 500 -
+2018-05-08 11:21:55,846 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:21:59,792 INFO werkzeug 125.62.214.210 - - [08/May/2018 11:21:59] "POST /api/test HTTP/1.1" 500 -
+2018-05-08 11:22:55,742 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:22:58,264 ERROR __main__ name 'os' is not defined
+2018-05-08 11:22:58,265 INFO werkzeug 125.62.214.210 - - [08/May/2018 11:22:58] "POST /api/test HTTP/1.1" 500 -
+2018-05-08 11:24:09,285 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:24:13,156 ERROR __main__ name 'os' is not defined
+2018-05-08 11:24:13,157 INFO werkzeug 125.62.214.210 - - [08/May/2018 11:24:13] "POST /api/test HTTP/1.1" 500 -
+2018-05-08 11:32:11,907 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:32:15,124 ERROR __main__ name 'os' is not defined
+2018-05-08 11:32:15,124 ERROR __main__ 'cid'
+2018-05-08 11:32:15,125 INFO werkzeug 125.62.214.210 - - [08/May/2018 11:32:15] "POST /api/test HTTP/1.1" 500 -
+2018-05-08 11:35:36,218 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:35:39,113 ERROR __main__ name 'os' is not defined
+2018-05-08 11:35:39,113 INFO werkzeug 125.62.214.210 - - [08/May/2018 11:35:39] "POST /api/test HTTP/1.1" 200 -
+2018-05-08 11:37:29,479 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-08 11:37:32,785 ERROR __main__ name 'os' is not defined
+2018-05-08 11:37:32,785 INFO werkzeug 125.62.214.210 - - [08/May/2018 11:37:32] "POST /api/test HTTP/1.1" 400 -
+2018-05-12 03:13:40,898 ERROR werkzeug 164.52.7.164 - - [12/May/2018 03:13:40] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x01"\x01\x00\x01')
+2018-05-16 06:02:25,666 ERROR __main__ 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+2018-05-17 08:23:25,965 INFO werkzeug  * Running on http://107.180.71.58:5000/ (Press CTRL+C to quit)
+2018-05-17 08:23:55,229 INFO werkzeug 125.62.214.210 - - [17/May/2018 08:23:55] "POST /api/test HTTP/1.1" 200 -
+2018-05-17 08:23:55,232 DEBUG urllib3.connectionpool Starting new HTTPS connection (1): api.telegram.org
+2018-05-17 08:24:00,635 DEBUG urllib3.connectionpool https://api.telegram.org:443 "POST /bot514668041:AAGf5C4tA9qMSjUoXfPUbJdo1mRgNzj_-7Q/sendPhoto HTTP/1.1" 200 716
+2018-05-17 08:26:02,734 INFO werkzeug 125.62.214.210 - - [17/May/2018 08:26:02] "POST /api/test HTTP/1.1" 200 -
+2018-05-17 08:26:02,736 DEBUG urllib3.connectionpool Starting new HTTPS connection (1): api.telegram.org
+2018-05-17 08:26:05,634 DEBUG urllib3.connectionpool https://api.telegram.org:443 "POST /bot514668041:AAGf5C4tA9qMSjUoXfPUbJdo1mRgNzj_-7Q/sendPhoto HTTP/1.1" 200 716
+2018-05-17 08:27:09,167 INFO werkzeug 125.62.214.210 - - [17/May/2018 08:27:09] "POST /api/test HTTP/1.1" 200 -
+2018-05-17 08:27:09,168 DEBUG urllib3.connectionpool Starting new HTTPS connection (1): api.telegram.org
+2018-05-17 08:27:11,159 DEBUG urllib3.connectionpool https://api.telegram.org:443 "POST /bot500853522:AAHaNE0c1mZXUkoj3fFpWdB-CRvVbsxC2Hc/sendPhoto HTTP/1.1" 200 720
