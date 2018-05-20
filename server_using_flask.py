@@ -40,10 +40,13 @@ def sendImage(filename, cid, flag):
 	bot = telepot.Bot(chat_api)
 	url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
 	files = {'photo': open(filename, 'rb')}
+	text_data = "Person Detected"
+	if(flag == 10):
+		text_data = "Person Detected after server failure"
 	if(flag==0):
 		text_data = "Person Detected"
 	else:
-		text_data = "MLGuard Started"
+		text_data = 'MLGuard has started'
 	data = {'chat_id' : chat_id, "caption":text_data}
 	r= requests.post(url, files=files, data=data)
 	print("Image sent to telegram")
@@ -93,7 +96,7 @@ def test():
 		file_like = BytesIO(img)
 		img = Image.open(file_like)
 		present_time = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-		filename = "../images/"+present_time +".jpg"
+		filename = "images/"+present_time +".jpg"
 		img.save(filename)
 		# do some fancy processing here....
 
