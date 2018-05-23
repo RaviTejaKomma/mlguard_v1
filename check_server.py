@@ -1,6 +1,7 @@
 # Script to check if the server is running or not
 import os
 import requests
+import time
 
 def send_to_telegram():
 	chat_id = '454098853'
@@ -11,10 +12,11 @@ def send_to_telegram():
 	
 hostname = "107.180.71.58"
 
-response = os.system("ping -c 1 " + hostname)
-if response == 0:
-	print(hostname, ' is up!')
-else:
-	print (hostname, ' is down!')
-	send_to_telegram()
-	
+while(1):
+	response = os.system("ping -c 1 " + hostname)
+	if response == 0:
+		print(hostname, ' is up!')
+	else:
+		print (hostname, ' is down!')
+		send_to_telegram()
+	time.sleep(300)
