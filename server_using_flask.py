@@ -35,18 +35,18 @@ def retrieve_telegram_details(cid):
 	chat_api = data[0][1]
 	return [chat_id,chat_api]
 
-def sendImage(filename, cid, flag):
+def sendImage(filename, cid, flag, present_time):
 	chat_id, chat_api = retrieve_telegram_details(cid)
 	bot = telepot.Bot(chat_api)
 	url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
 	files = {'photo': open(filename, 'rb')}
 	text_data = "Person Detected"
 	if(flag == 10):
-		text_data = "Person Detected after server failure"
-	if(flag==0):
-		text_data = "Person Detected"
+		text_data = "Person Detected after server failure in MLGuard-"+str(cid)+" at "+str(present_time)
+	elif(flag==0):
+		text_data = "Person Detected in MLGuard-" + str(cid) + " at " + str(present_time)
 	else:
-		text_data = 'MLGuard has started'
+		text_data = 'MLGuard-' + str(cid) + 'has started at '+str(present_time)
 	data = {'chat_id' : chat_id, "caption":text_data}
 	r= requests.post(url, files=files, data=data)
 	print("Image sent to telegram")
@@ -81,6 +81,13 @@ def log_in_db_cam_status(filename, cid):
 	conn.close()
 	print("Logged Successfully")
 
+def send_error_to_telegram(msg):
+	chat_id = '454098853'
+	chat_api = '579446109:AAHoqiZCwRQriftAIwyeCEIfyRPGyZicHhI'
+	message = msg
+	url = "https://api.telegram.org/bot"+chat_api+"/sendMessage?chat_id="+chat_id+"&text='"+message+"'"	
+	r = requests.post(url)	
+
 # Initialize the Flask application
 app = Flask(__name__)
 
@@ -96,7 +103,7 @@ def test():
 		file_like = BytesIO(img)
 		img = Image.open(file_like)
 		present_time = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-		filename = "images/"+present_time +".jpg"
+		filename = "../images/"+present_time +".jpg"
 		img.save(filename)
 		# do some fancy processing here....
 
@@ -111,12 +118,13 @@ def test():
 			log_in_db(filename, cid)
 		else:
 			log_in_db_cam_status(filename, cid)
-		thread = Thread(target = sendImage, args = (filename, cid, int(data['flag'])))
+		thread = Thread(target = sendImage, args = (filename, cid, int(data['flag']), present_time))
 		thread.start()
 
 		return Response(response=response_pickled, status=200, mimetype="application/json")
 	except Exception as e:
 		logger.error(e)	
+		send_error_to_telegram('There is an error in the server. Please fix as soon as possible')
 
 # start flask app
 app.run(host="107.180.71.58", port=5000)
