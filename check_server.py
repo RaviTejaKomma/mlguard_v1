@@ -1,7 +1,5 @@
 # Script to check if the server is running or not
 import os
-import telepot
-from telepot.loop import MessageLoop
 import requests
 
 def send_to_telegram():
@@ -12,11 +10,12 @@ def send_to_telegram():
 	r = requests.post(url)
 	
 hostname = "107.180.71.58"
-response = os.system("ping -c 1 " + hostname)
 
-if response == 0:
-	print(hostname, ' is up!')
-else:
-	print (hostname, ' is down!')
-	send_to_telegram()
+while(1):
+	response = os.system("ping -c 1 " + hostname)
+	if response == 0:
+		print(hostname, ' is up!')
+	else:
+		print (hostname, ' is down!')
+		send_to_telegram()
 	
