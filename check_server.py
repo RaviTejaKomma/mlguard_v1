@@ -11,11 +11,10 @@ def send_to_telegram():
 	
 hostname = "107.180.71.58"
 
-while(1):
-	response = os.system("ping -c 1 " + hostname)
-	if response == 0:
-		print(hostname, ' is up!')
-	else:
-		print (hostname, ' is down!')
-		send_to_telegram()
+response = os.system("ping -c 1 " + hostname)
+if response == 0:
+	print(hostname, ' is up!')
+else:
+	print (hostname, ' is down!')
+	send_to_telegram()
 	
