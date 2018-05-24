@@ -131,4 +131,4 @@ def test():
 
 # start flask app
 print('Server has started running.')
-app.run(host="192.168.50.252", port=5000)
+app.run(host="107.180.71.58", port=5000)
