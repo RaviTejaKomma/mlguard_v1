@@ -12,6 +12,7 @@ import MySQLdb
 import pickle
 from threading import Thread
 import logging
+from pytz import timezone  
 
 logging.basicConfig(filename='error_log.log', level=logging.ERROR, 
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
@@ -35,18 +36,20 @@ def retrieve_telegram_details(cid):
 	chat_api = data[0][1]
 	return [chat_id,chat_api]
 
-def sendImage(filename, cid, flag, present_time):
+def sendImage(filename, cid, flag, client_timezone):
+	tz = timezone(client_timezone)
+	present_time = datetime.datetime.now(str(tz)).strftime('%Y-%m-%d %H:%M:%S')
 	chat_id, chat_api = retrieve_telegram_details(cid)
 	bot = telepot.Bot(chat_api)
 	url = "https://api.telegram.org/bot"+chat_api+"/sendPhoto"
 	files = {'photo': open(filename, 'rb')}
 	text_data = "Person Detected"
 	if(flag == 10):
-		text_data = "Person Detected after server failure in MLGuard-"+str(cid)+" at "+str(present_time)
+		text_data = "Person Detected after server failure in MLGuard-" + str(cid) + " at " + str(present_time)
 	elif(flag==0):
 		text_data = "Person Detected in MLGuard-" + str(cid) + " at " + str(present_time)
 	else:
-		text_data = 'MLGuard-' + str(cid) + 'has started at '+str(present_time)
+		text_data = 'MLGuard-' + str(cid) + 'has started at ' + str(present_time)
 	data = {'chat_id' : chat_id, "caption":text_data}
 	r= requests.post(url, files=files, data=data)
 	print("Image sent to telegram")
@@ -97,7 +100,7 @@ def test():
 	try:
 		data = pickle.loads(request.data)
 		cid = int(data['cid'])
-
+		client_timezone = data['timezone']
 		# # decode image
 		img = base64.b64decode(data['img'])
 		file_like = BytesIO(img)
@@ -118,7 +121,7 @@ def test():
 			log_in_db(filename, cid)
 		else:
 			log_in_db_cam_status(filename, cid)
-		thread = Thread(target = sendImage, args = (filename, cid, int(data['flag']), present_time))
+		thread = Thread(target = sendImage, args = (filename, cid, int(data['flag']), client_timezone))
 		thread.start()
 
 		return Response(response=response_pickled, status=200, mimetype="application/json")
@@ -127,4 +130,5 @@ def test():
 		send_error_to_telegram('There is an error in the server. Please fix as soon as possible')
 
 # start flask app
-app.run(host="107.180.71.58", port=5000)
+print('Server has started running.')
+app.run(host="192.168.50.252", port=5000)
