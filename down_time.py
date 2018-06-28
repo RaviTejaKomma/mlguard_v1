@@ -11,13 +11,19 @@ logging.basicConfig(filename='error_log.log', level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger=logging.getLogger(__name__)
 
+host_ip = "107.180.71.58"
+port = 3306
+user = "root"
+pwd = "root"
+db_name = "mlcharts2"
+
 def check_status():
 	uptimes_all = {}
 	down_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 	down_time = datetime.strptime(down_time, '%Y-%m-%d %H:%M:%S')
 	
 	query =  "SELECT cid, last_uptime FROM uptime"
-	conn = MySQLdb.connect(host="107.180.71.58", port=3306, user="root", passwd="root", db="mlcharts")
+	conn = MySQLdb.connect(host = host_ip, port = port, user = user, passwd = pwd, db = db_name)
 	cur=conn.cursor()   
 	cur.execute(query)
 	rows = cur.fetchall()
@@ -40,7 +46,7 @@ def store_downtime(cid):
 	down_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 	query = "INSERT INTO downtime(cid,last_downtime) VALUE('" + str(cid) + "','" + str(down_time) + "')"    
 	try:
-		conn = MySQLdb.connect(host="107.180.71.58", port=3306, user="root", passwd="root", db="mlcharts")
+		conn = MySQLdb.connect(host = host_ip, port = port, user = user, passwd = pwd, db = db_name)
 		cur=conn.cursor()   
 		cur.execute(query)
 		conn.commit()   

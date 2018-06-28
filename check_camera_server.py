@@ -12,10 +12,10 @@ host_ip = "107.180.71.58"
 port = 3306
 user = "root"
 pwd = "root"
-db_name = "mlcharts"
+db_name = "mlcharts2"
 
 def get_telegram_details(cid):
-	conn = MySQLdb.connect(host=host_ip, port=port, user=user, passwd=pwd, db=db_name)
+	conn = MySQLdb.connect(host = host_ip, port = port, user = user, passwd = pwd, db = db_name)
 	cur = conn.cursor()
 	query = "SELECT chat_id, chat_api FROM chat_table where cid=" + str(cid)
 	cur.execute(query)
@@ -31,7 +31,7 @@ def send_to_telegram(cid):
 	r = requests.post(url)
 	
 def check_camera_status():
-	conn = MySQLdb.connect(host=host_ip, port=port, user=user, passwd=pwd, db=db_name)
+	conn = MySQLdb.connect(host = host_ip, port = port, user = user, passwd = pwd, db = db_name)
 	cur = conn.cursor()
 	query = "SELECT cid, status FROM check_camera"
 	cur.execute(query)

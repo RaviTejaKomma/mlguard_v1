@@ -22,7 +22,7 @@ def get_connection():
 			  port=3306,
 			  user="root",
 			  passwd="root",
-			  db="mlcharts")
+			  db="mlcharts2")
 	return conn
 
 def retrieve_telegram_details(cid):
