@@ -140,7 +140,7 @@ def store_uptime():
     try:
         data = pickle.loads(request.data)
         cid = int(data['cid'])
-        up_time = int(data['up_time'])
+        up_time = data['up_time']
         
         conn = get_connection()
         cur = conn.cursor()
