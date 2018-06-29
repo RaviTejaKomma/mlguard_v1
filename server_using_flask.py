@@ -153,7 +153,7 @@ def store_uptime():
         # encode response using json
         response_pickled = json.dumps(response)
 
-        print('uptime received and updated in the database')
+        print("Uptime received from",cid,"and updated in the database")
 
         return Response(response=response_pickled, status=200, mimetype="application/json")
     except Exception as e:
@@ -180,7 +180,7 @@ def store_camera_status():
         # encode response using json
         response_pickled = json.dumps(response)
 
-        print('camera status received and updated in the database')
+        print("Camera status received from",cid,"and updated in the database")
 
         return Response(response=response_pickled, status=200, mimetype="application/json")
     except Exception as e:
