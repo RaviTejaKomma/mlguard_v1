@@ -146,6 +146,16 @@ def store_uptime():
         cur = conn.cursor()
         cur.execute("""UPDATE uptime SET last_uptime=%s where cid=%s""",(up_time,cid))
         conn.commit()
+
+        # build a response dict to send back to client
+        response = {'status': 'uptime received','cid' : cid}
+
+        # encode response using json
+        response_pickled = json.dumps(response)
+
+        print('uptime received and updated in the database')
+
+        return Response(response=response_pickled, status=200, mimetype="application/json")
     except Exception as e:
         print("Exception occurred : ",e)
         logger.error(e)
