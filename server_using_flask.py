@@ -19,7 +19,7 @@ logging.basicConfig(filename='error_log.log', level=logging.ERROR,
 logger=logging.getLogger(__name__)
 
 def get_connection():
-	conn = MySQLdb.connect(host="107.180.71.58",
+	conn = MySQLdb.connect(host="localhost",
 			  port=3306,
 			  user="root",
 			  passwd="root",
