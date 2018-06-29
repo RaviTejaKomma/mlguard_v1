@@ -134,6 +134,24 @@ def main():
 		logger.error(e)	
 		send_error_to_telegram('There is an error in the server. Please fix as soon as possible')
 
+
+@app.route('/api/test_uptime', methods=['POST'])
+def store_uptime(): 
+    try:
+    	data = pickle.loads(request.data)
+		cid = int(data['cid'])
+		up_time = int(data['up_time'])
+		
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute("""UPDATE uptime SET last_uptime=%s where cid=%s""",(up_time,cid))
+        conn.commit()
+    except Exception as e:
+        print("Exception occurred : ",e)
+        logger.error(e)
+        conn.rollback()
+    conn.close()
+
 # start flask app
 print('Server has started running.')
 app.run(host="107.180.71.58", port=5000)
