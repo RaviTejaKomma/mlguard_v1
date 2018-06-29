@@ -64,9 +64,11 @@ def log_in_db(filename, cid):
 		cur.execute("""INSERT INTO faces_log(face_image,in_time,cid,name) VALUES (%s,%s,%s,%s)""",(encoded_blob,in_time,cid,'UNKNOWN'))
 		conn.commit()
 	except Exception as e:
+		print("Exception occurred :",e)
 		conn.rollback()
 		logger.error(e)
-	conn.close()
+	finally:
+		conn.close()
 	print("Logged Successfully")
 	
 def log_in_db_cam_status(filename, cid):
@@ -79,9 +81,11 @@ def log_in_db_cam_status(filename, cid):
 		cur.execute("""UPDATE check_camera SET image=%s, in_time=%s where cid=%s""",(encoded_blob, in_time, cid))
 		conn.commit()
 	except Exception as e:
+		print("Exception occurred :",e)
 		conn.rollback()
 		logger.error(e)
-	conn.close()
+	finally:
+		conn.close()
 	print("Logged Successfully")
 
 def send_error_to_telegram(msg):
