@@ -17,6 +17,19 @@ user = "root"
 pwd = "root"
 db_name = "mlcharts2"
 
+def store_downtime(cid):    
+    down_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    query = "INSERT INTO downtime(cid,last_downtime) VALUE('" + str(cid) + "','" + str(down_time) + "')"    
+    try:
+        conn = MySQLdb.connect(host = host_ip, port = port, user = user, passwd = pwd, db = db_name)
+        cur=conn.cursor()   
+        cur.execute(query)
+        conn.commit()   
+    except Exception as e:
+        cur.rollback()
+    conn.close()
+    print("DownTime logged")
+
 def check_status():
     uptimes_all = {}
     down_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -40,21 +53,7 @@ def check_status():
             #print("MLGuard "+str(cid)+" is down !!")           
             store_downtime(cid)
         else:
-            print("MLGuard "+str(cid)+" is up !!")
-    
-def store_downtime(cid):    
-    down_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    query = "INSERT INTO downtime(cid,last_downtime) VALUE('" + str(cid) + "','" + str(down_time) + "')"    
-    try:
-        conn = MySQLdb.connect(host = host_ip, port = port, user = user, passwd = pwd, db = db_name)
-        cur=conn.cursor()   
-        cur.execute(query)
-        conn.commit()   
-    except Exception as e:
-        cur.rollback()
-    conn.close()
-    print("DownTime logged")
-    
+            print("MLGuard "+str(cid)+" is up !!")    
 
 if __name__ == "__main__":
     try:

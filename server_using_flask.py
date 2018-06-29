@@ -162,6 +162,34 @@ def store_uptime():
         conn.rollback()
     conn.close()
 
+@app.route('/api/test_camera', methods=['POST'])
+def store_camera_status(): 
+    try:
+        data = pickle.loads(request.data)
+        cid = int(data['cid'])
+        status = data['camera_status']
+        
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute("""UPDATE check_camera SET status=%s where cid=%s""",(status, cid))
+        conn.commit()
+
+        # build a response dict to send back to client
+        response = {'status': 'camera status received','cid' : cid}
+
+        # encode response using json
+        response_pickled = json.dumps(response)
+
+        print('camera status received and updated in the database')
+
+        return Response(response=response_pickled, status=200, mimetype="application/json")
+    except Exception as e:
+        print("Exception occurred : ",e)
+        logger.error(e)
+        conn.rollback()
+    conn.close()
+
+
 # start flask app
 print('Server has started running.')
 app.run(host="107.180.71.58", port=5000)
