@@ -48,7 +48,7 @@ def sendImage(filename, cid, flag):
 	elif(flag==0):
 		text_data = "Person Detected in MLGuard-" + str(cid)
 	else:
-		text_data = 'MLGuard-' + str(cid) + 'has started'
+		text_data = 'MLGuard-' + str(cid) + ' has started'
 
 	data = {'chat_id' : chat_id, "caption":text_data}
 	r = requests.post(url, files=files, data=data)
@@ -99,8 +99,8 @@ def send_error_to_telegram(msg):
 app = Flask(__name__)
 
 # route http posts to this method
-@app.route('/api/test', methods=['POST'])
-def test():
+@app.route('/api/main', methods=['POST'])
+def main():
 	try:
 		data = pickle.loads(request.data)
 		cid = int(data['cid'])
