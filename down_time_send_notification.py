@@ -6,7 +6,7 @@ import telepot
 from telepot.loop import MessageLoop
 import requests
 
-host_ip = "107.180.71.58"
+host_ip = "localhost"
 port = 3306
 user = "root"
 pwd = "root"

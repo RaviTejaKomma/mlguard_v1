@@ -11,7 +11,7 @@ logging.basicConfig(filename='error_log.log', level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger=logging.getLogger(__name__)
 
-host_ip = "107.180.71.58"
+host_ip = "localhost"
 port = 3306
 user = "root"
 pwd = "root"
